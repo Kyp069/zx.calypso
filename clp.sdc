@@ -18,8 +18,8 @@ set_false_path -to   i2s*
 set_false_path -to   led*
 set_false_path -to   dram*
 set_false_path -from dram*
+set_false_path -from spiSs1
 set_false_path -from spiSs2
 set_false_path -from spiSs3
-set_false_path -from spiSsIo
 set_false_path -from spiMosi
 set_false_path -to   spiMiso

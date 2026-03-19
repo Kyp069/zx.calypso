@@ -78,10 +78,10 @@ set_location_assignment PIN_A10 -to dramDQ[1]
 set_location_assignment PIN_B10 -to dramDQ[0]
 
 set_location_assignment PIN_T13 -to spiCk
+set_location_assignment PIN_T15 -to spiSs1
 set_location_assignment PIN_N16 -to spiSs2
 set_location_assignment PIN_F15 -to spiSs3
 #set_location_assignment PIN_R14 -to spiSs4
-set_location_assignment PIN_T15 -to spiSsIo
 set_location_assignment PIN_T14 -to spiMosi
 set_location_assignment PIN_R13 -to spiMiso
 

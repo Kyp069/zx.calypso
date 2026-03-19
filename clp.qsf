@@ -71,7 +71,6 @@ set_global_assignment -name SDC_FILE clp.sdc
 set_global_assignment -name VERILOG_FILE clp.v
 set_global_assignment -name VERILOG_FILE pll0.v
 set_global_assignment -name VERILOG_FILE pll1.v
-set_global_assignment -name VERILOG_FILE mist.v
 set_global_assignment -name VERILOG_FILE sdram.v
 set_global_assignment -name VERILOG_FILE zx/zx.v
 set_global_assignment -name VERILOG_FILE zx/cpu.v
@@ -84,6 +83,7 @@ set_global_assignment -name VERILOG_FILE zx/sdc.v
 set_global_assignment -name VERILOG_FILE zx/spi.v
 set_global_assignment -name VERILOG_FILE zx/tzx.v
 set_global_assignment -name VERILOG_FILE zx/vdu.v
+set_global_assignment -name VERILOG_FILE zx/mist.v
 set_global_assignment -name VERILOG_FILE zx/ps2k.v
 set_global_assignment -name VERILOG_FILE zx/mapper.v
 set_global_assignment -name VERILOG_FILE zx/matrix.v

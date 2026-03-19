@@ -33,9 +33,9 @@ module clp
 	// input  wire       midiD,  // cyc_aux5
 
 	input  wire       spiCk,
+	input  wire       spiSs1,
 	input  wire       spiSs2,
 	input  wire       spiSs3,
-	input  wire       spiSsIo,
 	input  wire       spiMosi,
 	output wire       spiMiso
 );
@@ -63,7 +63,7 @@ module clp
 
 	wire ne3M5 = ce[3:0] == 15;
 	wire pe3M5 = ce[3:0] == 7;
-	
+
 //--- mist ----------------------------------------------------------------------------------------
 
 	wire hsync;
@@ -85,9 +85,9 @@ module clp
 
 	wire[63:0] status;
 
+	wire       romIo;
+	wire       tzxIo;
 	wire[31:0] dioSz;
-	wire       dioEn;
-	wire[ 7:0] dioIx;
 	wire[26:0] dioA;
 	wire[ 7:0] dioD;
 	wire       dioW;
@@ -97,15 +97,15 @@ module clp
 	wire sdcMosi;
 	wire sdcMiso;
 
-	mist mist
+	mist #(.RGBW(4)) mist
 	(
 		.clock  (clock  ),
 		.ne14M  (ne14M  ),
 		.ne7M0  (ne7M0  ),
 		.spiCk  (spiCk  ),
+		.spiSs1 (spiSs1 ),
 		.spiSs2 (spiSs2 ),
 		.spiSs3 (spiSs3 ),
-		.spiSsIo(spiSsIo),
 		.spiMosi(spiMosi),
 		.spiMiso(spiMiso),
 		.status (status ),
@@ -124,12 +124,12 @@ module clp
 		.mbtns  (mbtns  ),
 		.xaxis  (xaxis  ),
 		.yaxis  (yaxis  ),
-		.dioSz  (dioSz  ),   
-		.dioEn  (dioEn  ),   
-		.dioIx  (dioIx  ),   
-		.dioA   (dioA   ),  
-		.dioD   (dioD   ),  
-		.dioW   (dioW   ),  
+		.romIo  (romIo  ),
+		.tzxIo  (tzxIo  ),
+		.dioSz  (dioSz  ),
+		.dioA   (dioA   ),
+		.dioD   (dioD   ),
+		.dioW   (dioW   ),
 		.sdcCs  (sdcCs  ),
 		.sdcCk  (sdcCk  ),
 		.sdcMosi(sdcMosi),
@@ -151,7 +151,7 @@ module clp
 	wire[15:0] rmix = { 1'd0, right }+{ 4'd0, {12{ !status[5] && ear}} };
 
 	i2s i2s(clock, lmix, rmix, i2sCk, i2sWs, i2sD);
-	
+
 //--- keyboard ------------------------------------------------------------------------------------
 
 	wire      strb;
@@ -183,8 +183,6 @@ module clp
 	wire[ 7:0] q2 = sdrQ[7:0];
 	wire w2;
 	wire r2;
-
-	wire romIo = dioEn && dioIx[5:0] == 0;
 
 	reg r2p = 1'b1;
 	always @(posedge clock) if(pe3M5) r2p <= r2;
@@ -226,7 +224,6 @@ module clp
 	localparam TK = 44;
 	localparam TW = $clog2(TK*1024);
 
-	wire         tzxIo = dioEn && dioIx[5:0] == 1;
 	wire[TW-1:0] tzxA;
 
 	reg[TW-1:0] tzxSize;
