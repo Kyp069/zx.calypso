@@ -171,12 +171,11 @@ module clp
 //--- memory --------------------------------------------------------------------------------------
 
 	wire ready;
-	wire mreq;
 	wire rfsh;
 
 	wire[13:0] a1;
 	wire[ 7:0] q1;
-	wire w1 = !mreq && !w2 && a2[18:17] == 2 && (a2[16:14] == 5 || a2[16:14] == 7) && !a2[13];
+	wire       w1 = w2 && a2[18:17] == 2 && (a2[16:14] == 5 || a2[16:14] == 7) && !a2[13];
 
 	wire[18:0] a2;
 	wire[ 7:0] d2;
@@ -184,7 +183,7 @@ module clp
 	wire w2;
 	wire r2;
 
-	reg r2p = 1'b1;
+	reg r2p = 0;
 	always @(posedge clock) if(pe3M5) r2p <= r2;
 
 	dprs #(16) drp(clock, a1, q1, clock, { a2[15], a2[12:0] }, d2, w1);
@@ -192,13 +191,12 @@ module clp
 	wire[21:0] sdrA = romIo ? dioA[21:0] : { 3'd0, a2 };
 	wire[15:0] sdrD = { 8'hFF, romIo ? dioD : d2 };
 	wire[15:0] sdrQ;
-	wire       sdrR = !mreq && !r2p;
-	wire       sdrW = romIo ? dioW : !mreq && !w2 && a2[18:17];
+	wire       sdrR = r2p;
+	wire       sdrW = romIo ? dioW : w2 && a2[18:17];
 
 	sdram sdram
 	(
 		.clock  (clock  ),
-		.reset  (power  ),
 		.ready  (ready  ),
 		.rfsh   (rfsh   ),
 		.a      (sdrA   ),
@@ -206,6 +204,7 @@ module clp
 		.q      (sdrQ   ),
 		.rd     (sdrR   ),
 		.wr     (sdrW   ),
+		.dramCe (dramCe ),
 		.dramCs (dramCs ),
 		.dramRas(dramRas),
 		.dramCas(dramCas),
@@ -217,7 +216,6 @@ module clp
 	);
 
 	assign dramCk = clock;
-	assign dramCe = 1'b1;
 
 //--- tzx -----------------------------------------------------------------------------------------
 
@@ -272,7 +270,6 @@ module clp
 		.ne3M5  (ne3M5  ),
 		.pe3M5  (pe3M5  ),
 		.reset  (reset  ),
-		.mreq   (mreq   ),
 		.rfsh   (rfsh   ),
 		.nmi    (nmi    ),
 		.a1     (a1     ),
