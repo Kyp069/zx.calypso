@@ -33,10 +33,10 @@ set_location_assignment PIN_D15 -to i2sCk
 set_location_assignment PIN_D16 -to i2sWs
 set_location_assignment PIN_C15 -to i2sD
 
-# set_location_assignment PIN_J14 -to midi
-# set_location_assignment PIN_F16 -to midiCk
-# set_location_assignment PIN_F13 -to midiWs
-# set_location_assignment PIN_L2 -to midiD
+set_location_assignment PIN_J14 -to midi
+set_location_assignment PIN_F16 -to midiCk
+set_location_assignment PIN_F13 -to midiWs
+set_location_assignment PIN_L2 -to midiD
 
 set_location_assignment PIN_B14 -to dramCk
 set_location_assignment PIN_F8  -to dramCe
@@ -89,6 +89,6 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to led*
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to sync*
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to rgb*
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to i2s*
-# set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to midi
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to midi
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dram*
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to spi*
